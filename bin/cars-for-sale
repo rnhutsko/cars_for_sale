@@ -3,4 +3,4 @@
 require "bundler/setup"
 require "cars_for_sale"
 
-Cars-for-Sale::CLI.new.call
+CarsforSale::CLI.new.call

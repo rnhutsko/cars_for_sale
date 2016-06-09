@@ -1,13 +1,9 @@
 require 'open-uri'
-require 'nokgiri'
+require 'nokogiri'
 require 'pry'
 
 
 
-require_relative "cars_for_sale/version"
-require_relative './cars_for_sale/cli'
-
-
-module CarsForSale
-  # Your code goes here...
-end
+# require_relative "./cars_for_sale/version"
+# require_relative "./cars_for_sale/cars"
+ require_relative "./cars_for_sale/cli"

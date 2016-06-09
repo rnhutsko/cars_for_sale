@@ -1,4 +1,4 @@
-class Cars-for-Sale::CLI
+class CarsforSale::CLI
 
 def call
   puts "Welcome to Cars.com cars for sale..."
