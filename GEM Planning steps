@@ -7,3 +7,10 @@ GEM Planning steps
 5. stub out interface
 6. start making things real
 7. discover objects
+
+
+
+Big picture:
+bin/cars-for-sale will call the CarsforSale::CLI
+
+The CarsforSale::CLI will call the CarsforSale::Cars class in cars.rb which will greet the user, call

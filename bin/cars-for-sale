@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require "bundler/setup"
-require "cars_for_sale"
+require './lib/cars_for_sale'
 
 CarsforSale::CLI.new.call
