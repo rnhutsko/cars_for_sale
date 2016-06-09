@@ -1,0 +1,9 @@
+GEM Planning steps
+
+1. Plan your gem, imagine your interface
+2. Start with project structure - google
+3. Start with entry point - the file run
+4. force that to build the CLI
+5. stub out interface
+6. start making things real
+7. discover objects
