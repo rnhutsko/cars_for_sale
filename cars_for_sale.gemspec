@@ -5,7 +5,7 @@ require 'cars_for_sale/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "cars_for_sale"
-  spec.version       = CarsForSale::VERSION
+  spec.version       = CarsforSale::VERSION
   spec.authors       = ["rnhutsko"]
   spec.email         = ["rnhutsko@gmail.com"]
 
