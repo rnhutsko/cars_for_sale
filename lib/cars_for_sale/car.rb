@@ -4,31 +4,12 @@ class CarsforSale::Car
    def self.used
     
     #do stuff to scrape cars from Cars.com 
-
-    #stubout
-      #car = self.new
-      #car.type = "Used"
-      #car.year = "2014"
-      #car.make = "Ferrari"
-      #car.model = "LaFerrari Base"
-      #car.price = "$4,400,000 "
-      car.ext_color = "Red"
-      car.engine = "6.3L V12 48V GDI DOHC Hybrid"  
-      car.transmission = "7-Speed Automatic with Auto-Shift"
-      #car.vdp_url = "https://www.cars.com/vehicledetail/detail/664236376/overview" 
-      car.dealer_name = "Fusion Luxury Motors" 
-      car.dealer_address = "20837 Nordhoff St, Los Angeles, CA"
-      car.dealer_phone = "(866) 949-9665"
-
-    
-
-
     cars_array
    end
 
 
   def self.scrape_srp
-cars_array = []
+    cars_array = []
     doc = Nokogiri::HTML(open("http://www.hallauto.com/used-inventory/index.htm"))
     doc.css("li.inv-type-used").each do |vehicle|
       car = self.new
@@ -47,20 +28,42 @@ cars_array = []
 # http://www.hallauto.com/used/Infiniti/2003-Infiniti-G35-0e288c120a0e0ae86dafef0e57940bf9.htm
  
 
+  def self.scrape_vdp(a_car)
+      obj_url = "http://www.hallauto.com"
+      obj_url << a_car.vdp_url
+      
+      a_doc = Nokogiri::HTML(open(obj_url))
+  binding.pry
+       a_doc.css("a_doc.css("div.ddc-content.inventory-detail-quick-specs")").each do |vehicle|
+        
+      #   a_car.ext_color = vehicle.css('div.hproduct').attr('data-year').value
+         a_car.engine = vehicle.css("ul li.engine span:nth-child(4)").text.gsub("\n","")
+      #   a_car.transmission = vehicle.css('div.hproduct').attr('data-make').value
+      #   a_car.dealer_name = vehicle.css('div.hproduct').attr('data-model').value
+      #   a_car.dealer_address = vehicle.css('div.hproduct').attr('data-year').value
+      #   a_car.dealer_phone = vehicle.css("div.media a").attr('href').value
+       end
+      a_car
+  end
+#  body > div.ddc-wrapper > div.ddc-container.main > div > div:nth-child(8) > div.ddc-span4 > 
+#  div.ddc-content.inventory-detail-quick-specs > ul > li.engine > span:nth-child(4)
+
+#body > div.ddc-wrapper > div.ddc-container.main > div > div:nth-child(8) > div.ddc-span4 > div.ddc-content.inventory-detail-quick-specs > ul > li.engine > span:nth-child(4)
+
+
 end #of class
 
-# (Attr:0x3fe292892a74 { name = "class", value = "hproduct auto mercury" }),
-#         (Attr:0x3fe292892a60 { name = "data-classification", value = "wholesale" }),
-#         (Attr:0x3fe292892a38 { name = "data-bodystyle", value = "Sedan" }),
-#         (Attr:0x3fe2928929ac { name = "data-trim", value = "LS" }),
-#         (Attr:0x3fe292892830 { name = "data-year", value = "2003" }),
-#         (Attr:0x3fe29289281c { name = "data-model", value = "Grand Marquis" }),
-#         (Attr:0x3fe292892678 { name = "data-vin", value = "2MEFM75W73X643356" }),
-#         (Attr:0x3fe292892650 { name = "data-make", value = "Mercury" })],
-#  #compareForm > div > div.bd > ul:nth-child(1) > li:nth-child(1) > div.hproduct.auto.mercury > div > div.pricing-area.has-buttons > ul > li:nth-child(3) > span
+#stubout
+      
+      # car.ext_color = "Red"
+      # car.engine = "6.3L V12 48V GDI DOHC Hybrid"  
+      # car.transmission = "7-Speed Automatic with Auto-Shift"
+      # car.dealer_name = "Fusion Luxury Motors" 
+      # car.dealer_address = "20837 Nordhoff St, Los Angeles, CA"
+      # car.dealer_phone = "(866) 949-9665"
 
 
-#   div.pricing-area  ul.pricing  li  span.value
+
 
 
 

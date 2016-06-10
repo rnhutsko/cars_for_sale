@@ -13,11 +13,11 @@ class CarsforSale::CLI
   def get_a_car(a_car)
     #scrapes the VDP page for the given car object and updates 
     #car object with details and returns that updated car object
-    
+    CarsforSale::Car.scrape_vdp(a_car)
     a_car
   end
 
-  def list_a_car(car)
+  def list_a_car(a_car)
     #outputs a given car object to the screen
     
   end
