@@ -11,7 +11,7 @@ class CarsforSale::Car
       #car.year = "2014"
       #car.make = "Ferrari"
       #car.model = "LaFerrari Base"
-      car.price = "$4,400,000 "
+      #car.price = "$4,400,000 "
       car.ext_color = "Red"
       car.engine = "6.3L V12 48V GDI DOHC Hybrid"  
       car.transmission = "7-Speed Automatic with Auto-Shift"
@@ -30,7 +30,6 @@ class CarsforSale::Car
   def self.scrape_srp
 cars_array = []
     doc = Nokogiri::HTML(open("http://www.hallauto.com/used-inventory/index.htm"))
-     # binding.pry
     doc.css("li.inv-type-used").each do |vehicle|
       car = self.new
       car.year = vehicle.css('div.hproduct').attr('data-year').value
@@ -39,14 +38,13 @@ cars_array = []
       car.model = vehicle.css('div.hproduct').attr('data-model').value
       car.year = vehicle.css('div.hproduct').attr('data-year').value
       car.vdp_url = vehicle.css("div.media a").attr('href').value
-      car.price = vehicle.css("div.pricing-area.has-buttons  ul  li span  span.value").text
-
+      car.price = vehicle.css("div.pricing-area  ul.pricing  li  span.internetPrice span.value").text
       cars_array << car
     end
-
-cars_array
+    cars_array
   end
-
+#                        /used/Infiniti/2003-Infiniti-G35-0e288c120a0e0ae86dafef0e57940bf9.htm
+# http://www.hallauto.com/used/Infiniti/2003-Infiniti-G35-0e288c120a0e0ae86dafef0e57940bf9.htm
  
 
 end #of class
@@ -59,13 +57,10 @@ end #of class
 #         (Attr:0x3fe29289281c { name = "data-model", value = "Grand Marquis" }),
 #         (Attr:0x3fe292892678 { name = "data-vin", value = "2MEFM75W73X643356" }),
 #         (Attr:0x3fe292892650 { name = "data-make", value = "Mercury" })],
-#  #compareForm > div > div.bd > ul:nth-child(1) > li:nth-child(1) > div.hproduct.auto.mercury >
-
-# div > div.pricing-area.has-buttons > ul > li:nth-child(3) > span > span.value
+#  #compareForm > div > div.bd > ul:nth-child(1) > li:nth-child(1) > div.hproduct.auto.mercury > div > div.pricing-area.has-buttons > ul > li:nth-child(3) > span
 
 
-
-
+#   div.pricing-area  ul.pricing  li  span.value
 
 
 
