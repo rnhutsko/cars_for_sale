@@ -19,7 +19,18 @@ class CarsforSale::CLI
 
   def list_a_car(a_car)
     #outputs a given car object to the screen
-    
+    puts "Year: #{a_car.year}"  
+    puts "Make: #{a_car.make}"
+    puts "Model: #{a_car.model}"
+    puts "Exterior Color: #{a_car.ext_color}"
+    puts "Engine: #{a_car.engine}"
+    puts "Transmission: #{a_car.transmission}"
+    puts "Internet Price: #{a_car.price}"
+    puts ""
+    puts "Dealer Info:  #{a_car.dealer_name}"
+    puts "              #{a_car.dealer_address}"
+    puts "              #{a_car.dealer_phone}"
+
   end
 
 

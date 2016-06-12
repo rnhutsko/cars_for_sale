@@ -29,26 +29,27 @@ class CarsforSale::Car
  
 
   def self.scrape_vdp(a_car)
-      obj_url = "http://www.hallauto.com"
-      obj_url << a_car.vdp_url
+    obj_url = "http://www.hallauto.com"
+    obj_url << a_car.vdp_url
       
-      a_doc = Nokogiri::HTML(open(obj_url))
-  binding.pry
-       a_doc.css("a_doc.css("div.ddc-content.inventory-detail-quick-specs")").each do |vehicle|
-        
-      #   a_car.ext_color = vehicle.css('div.hproduct').attr('data-year').value
-         a_car.engine = vehicle.css("ul li.engine span:nth-child(4)").text.gsub("\n","")
-      #   a_car.transmission = vehicle.css('div.hproduct').attr('data-make').value
-      #   a_car.dealer_name = vehicle.css('div.hproduct').attr('data-model').value
-      #   a_car.dealer_address = vehicle.css('div.hproduct').attr('data-year').value
-      #   a_car.dealer_phone = vehicle.css("div.media a").attr('href').value
-       end
+    a_doc = Nokogiri::HTML(open(obj_url))
+      vehicle_details = a_doc.css("div.ddc-content.inventory-detail-quick-specs")
+      color_array = vehicle_details.css("ul  li.exteriorColor  span.value").text
+      color_array = color_array.split("\n")
+      a_car.ext_color = color_array[1]
+      a_car.engine = vehicle_details.css("ul li.engine span:nth-child(4)").text.gsub("\n","")
+      a_car.transmission = vehicle_details.css("ul  li.engine  span:nth-child(5)").text
+      
+      dealer_details = a_doc.css("div.ddc-content.contact-info.ddc-box-1")
+      a_car.dealer_name = dealer_details.css("div  p.fn.n  span").text
+      street = dealer_details.css("div  p.adr  a  span.street-address").text
+      city = dealer_details.css("div  p.adr  a  span.locality").text
+      state =  dealer_details.css("div  p.adr  a  span.region").text
+      zip_code = dealer_details.css("div > p.adr  a  span.postal-code").text
+      a_car.dealer_address = street + " " + city + " " + state + " " + zip_code
+      a_car.dealer_phone = dealer_details.css("div  ul  li  span.value").text
       a_car
   end
-#  body > div.ddc-wrapper > div.ddc-container.main > div > div:nth-child(8) > div.ddc-span4 > 
-#  div.ddc-content.inventory-detail-quick-specs > ul > li.engine > span:nth-child(4)
-
-#body > div.ddc-wrapper > div.ddc-container.main > div > div:nth-child(8) > div.ddc-span4 > div.ddc-content.inventory-detail-quick-specs > ul > li.engine > span:nth-child(4)
 
 
 end #of class
