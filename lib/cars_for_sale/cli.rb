@@ -11,8 +11,6 @@ class CarsforSale::CLI
   end
 
   def get_a_car(a_car)
-    #scrapes the VDP page for the given car object and updates 
-    #car object with details and returns that updated car object
     CarsforSale::Car.scrape_vdp(a_car)
     a_car
   end
@@ -34,16 +32,28 @@ class CarsforSale::CLI
   end
 
 
-  def list_cars(input = nil)
+  def list_cars(input = nil, length = nil, length_split = nil)
     if input.upcase == "ALL"
     @cars.each.with_index(1) do |srp_list,i|
           puts "#{i}. #{srp_list.year}  #{srp_list.make} #{srp_list.model} - #{srp_list.price}"
           puts ""
         end
     elsif input == "group_a"
-      puts "output first half of list"
+        i= 0
+        length_split -= 1
+        while i <= length_split        
+          puts "#{i + 1}. #{@cars[i].year}  #{@cars[i].make} #{@cars[i].model} - #{@cars[i].price}"
+          puts ""
+          i += 1
+        end
     else
-      puts "output last half of list"
+      i= length_split
+      length -= 1
+        while i <= length        
+          puts "#{i + 1}. #{@cars[i].year}  #{@cars[i].make} #{@cars[i].model} - #{@cars[i].price}"
+          puts ""
+          i += 1
+        end
     end #if
   end
 
@@ -51,45 +61,40 @@ class CarsforSale::CLI
     get_cars
     input = nil
     puts "Welcome to Cars.com's cars for sale..."
-    
     if @cars.length >= 50
       puts "There are 50+ cars.  You can view up to 50"
     puts "Which group of cars do wish to see? "
       puts "1-25, 26-50, ALL or EXIT?"
-   
     elsif @cars.length >= 15 && @cars.length < 50
-      length_split = (@cars.length / 2).round
+      length_full = @cars.length
+      length_split = (length_full / 2).round
       length_split_plus_one = length_split + 1
       length_split_plus_one = length_split_plus_one.to_s
       length_split = length_split.to_s
-
-      puts "There are #{@cars.length} cars."
+      length_full = length_full.to_s
+      group_a = "1-#{length_split}"
+      group_b = "#{length_split_plus_one}-#{length_full}"
+      puts "There are #{length_full} cars."
       puts "Which group of cars do wish to see? "
-      puts "1-#{length_split}, #{length_split_plus_one}-#{@cars.length}, ALL or EXIT?"
-      
-
+      puts "#{group_a}, #{group_b}, ALL or EXIT?"
     end
 
     input = gets.strip   
     input.upcase!
-
     while input != "EXIT" do
       if input == "ALL"
         list_cars(input)
-      elsif input == "1-#{length_split}"
+      elsif input == group_a
           input = "group_a"
-          list_cars(input)
-      elsif input == "{length_split_plus_one}-#{@cars.length}"
+          list_cars(input, length_full.to_i, length_split.to_i)
+      elsif input == group_b
         input = "group_b"
-        list_cars(input)
+        list_cars(input, length_full.to_i, length_split.to_i)
       end
-      
-      puts "Which car do wish to see more info on, list ALL again or EXIT?(enter line number)"
+      puts "Which car do wish to see more info on (enter line number), list ALL partial or EXIT?"
       input = gets.strip
       input.upcase!
-      if input == "ALL"
-        list_cars(input)
-      elsif input != "EXIT"
+      if  input != "EXIT" && input != "ALL" && input != group_a && input != group_b
         puts "Calls VDP_scrapper to list vehicle details"
         input = input.to_i
         idx = input - 1
