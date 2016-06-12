@@ -5,7 +5,6 @@ class CarsforSale::CLI
     bid_you_adieu
   end
 
-
   def get_cars
     @cars = CarsforSale::Car.scrape_srp
   end
@@ -59,21 +58,24 @@ class CarsforSale::CLI
 
   def menu
     get_cars
+
+    length_full = @cars.length
+    length_split = (length_full / 2).round
+    length_split_plus_one = length_split + 1
+    length_split_plus_one = length_split_plus_one.to_s
+    length_split = length_split.to_s
+    length_full = length_full.to_s
+    group_a = "1-#{length_split}"
+    group_b = "#{length_split_plus_one}-#{length_full}"
+
     input = nil
-    puts "Welcome to Cars.com's cars for sale..."
+    puts "Welcome to cars for sale by Hall Automotive..."
+    
     if @cars.length >= 50
       puts "There are 50+ cars.  You can view up to 50"
-    puts "Which group of cars do wish to see? "
+      puts "Which group of cars do wish to see? "
       puts "1-25, 26-50, ALL or EXIT?"
     elsif @cars.length >= 15 && @cars.length < 50
-      length_full = @cars.length
-      length_split = (length_full / 2).round
-      length_split_plus_one = length_split + 1
-      length_split_plus_one = length_split_plus_one.to_s
-      length_split = length_split.to_s
-      length_full = length_full.to_s
-      group_a = "1-#{length_split}"
-      group_b = "#{length_split_plus_one}-#{length_full}"
       puts "There are #{length_full} cars."
       puts "Which group of cars do wish to see? "
       puts "#{group_a}, #{group_b}, ALL or EXIT?"
@@ -91,11 +93,10 @@ class CarsforSale::CLI
         input = "group_b"
         list_cars(input, length_full.to_i, length_split.to_i)
       end
-      puts "Which car do wish to see more info on (enter line number), list ALL partial or EXIT?"
+      puts "Which car do wish to see(enter line number), OR All, partial, or EXIT?"
       input = gets.strip
       input.upcase!
       if  input != "EXIT" && input != "ALL" && input != group_a && input != group_b
-        puts "Calls VDP_scrapper to list vehicle details"
         input = input.to_i
         idx = input - 1
         get_a_car(@cars[idx])
@@ -103,7 +104,6 @@ class CarsforSale::CLI
       end  
     end
   end
-
 
   def bid_you_adieu
     puts "Thanks for using this gem.  Have a great day!"

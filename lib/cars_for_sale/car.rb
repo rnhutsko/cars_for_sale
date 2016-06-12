@@ -1,11 +1,7 @@
 class CarsforSale::Car
   attr_accessor :year, :make, :model, :engine, :transmission, :ext_color, :price, :vdp_url, :dealer_name, :dealer_address, :dealer_phone, :type
 
-   def self.used
-    
-    #do stuff to scrape cars from Cars.com 
-    cars_array
-   end
+
 
 
   def self.scrape_srp
@@ -24,9 +20,6 @@ class CarsforSale::Car
     end
     cars_array
   end
-#                        /used/Infiniti/2003-Infiniti-G35-0e288c120a0e0ae86dafef0e57940bf9.htm
-# http://www.hallauto.com/used/Infiniti/2003-Infiniti-G35-0e288c120a0e0ae86dafef0e57940bf9.htm
- 
 
   def self.scrape_vdp(a_car)
     obj_url = "http://www.hallauto.com"
@@ -54,17 +47,46 @@ class CarsforSale::Car
 
 end #of class
 
-#stubout
-      
-      # car.ext_color = "Red"
-      # car.engine = "6.3L V12 48V GDI DOHC Hybrid"  
-      # car.transmission = "7-Speed Automatic with Auto-Shift"
-      # car.dealer_name = "Fusion Luxury Motors" 
-      # car.dealer_address = "20837 Nordhoff St, Los Angeles, CA"
-      # car.dealer_phone = "(866) 949-9665"
+
+# def self.inventory
+#     doc = Nokogiri::HTML(open("http://www.hallauto.com/used-inventory/index.htm"))
+#     total_inv_count = doc.css("div.selections.facet-breadcrumb-selections > div > span.vehicle-count").text
+#     pagecount = (total_inv_count.to_i / 16).round
+    #  http://www.hallauto.com/used-inventory/index.htm?start=16&
+
+# From: /Users/rnhxfer/Development/code/cars_for_sale/lib/cars_for_sale/car.rb @ line 8 CarsforSale::Car.inventory:
+
+#      4:   def self.inventory
+#      5:     doc = Nokogiri::HTML(open("http://www.hallauto.com/used-inventory/index.htm"))
+#      6:     total_inv_count = doc.css("div.selections.facet-breadcrumb-selections > div > span.vehicle-count").text
+#      7:     pagecount = (total_inv_count.to_i / 16).round
+#  =>  8: binding.pry
+#      9:     #  http://www.hallauto.com/used-inventory/index.htm?start=16&
+#     10:   end
+
+# [1] pry(CarsforSale::Car)> pagecount
+# => 47
+# [2] pry(CarsforSale::Car)> total_inv_count
+# => "764"
+# [3] pry(CarsforSale::Car)> base_url = "http://www.hallauto.com/used-inventory/index.htm"
+# => "http://www.hallauto.com/used-inventory/index.htm"
+# [4] pry(CarsforSale::Car)> i = 2
+# => 2
+# [5] pry(CarsforSale::Car)> page = i * 16
+# => 32
+# [6] pry(CarsforSale::Car)> add_on = "?start=" + page + "&"
+# TypeError: no implicit conversion of Fixnum into String
+# from (pry):6:in `+'
+# [7] pry(CarsforSale::Car)> add_on = "?start=" + page.to_s + "&"
+# => "?start=32&"
+# [8] pry(CarsforSale::Car)> base_url << add_on
+# => "http://www.hallauto.com/used-inventory/index.htm?start=32&"
+# [9] pry(CarsforSale::Car)> 
 
 
 
 
 
+    
+  # end
 
