@@ -38,20 +38,14 @@ class CarsforSale::CLI
           puts ""
         end
     elsif input == "group_a"
-        i= 0
-        length_split -= 1
-        while i <= length_split        
+        (length_split).times do |i|        
           puts "#{i + 1}. #{@cars[i].year}  #{@cars[i].make} #{@cars[i].model} - #{@cars[i].price}"
           puts ""
-          i += 1
         end
     else
-      i= length_split
-      length -= 1
-        while i <= length        
+        (length_split..length-1).each do |i|        
           puts "#{i + 1}. #{@cars[i].year}  #{@cars[i].make} #{@cars[i].model} - #{@cars[i].price}"
           puts ""
-          i += 1
         end
     end #if
   end

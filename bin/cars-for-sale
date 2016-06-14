@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require './lib/cars_for_sale'
+require_relative '../lib/cars_for_sale'
 
 CarsforSale::CLI.new.call

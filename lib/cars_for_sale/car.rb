@@ -1,24 +1,19 @@
 class CarsforSale::Car
   attr_accessor :year, :make, :model, :engine, :transmission, :ext_color, :price, :vdp_url, :dealer_name, :dealer_address, :dealer_phone, :type
 
-
-
-
   def self.scrape_srp
-    cars_array = []
     doc = Nokogiri::HTML(open("http://www.hallauto.com/used-inventory/index.htm"))
-    doc.css("li.inv-type-used").each do |vehicle|
-      car = self.new
-      car.year = vehicle.css('div.hproduct').attr('data-year').value
-      car.type = vehicle.css('div.hproduct').attr('data-classification').value
-      car.make = vehicle.css('div.hproduct').attr('data-make').value
-      car.model = vehicle.css('div.hproduct').attr('data-model').value
-      car.year = vehicle.css('div.hproduct').attr('data-year').value
-      car.vdp_url = vehicle.css("div.media a").attr('href').value
-      car.price = vehicle.css("div.pricing-area  ul.pricing  li  span.internetPrice span.value").text
-      cars_array << car
+    doc.css("li.inv-type-used").collect do |vehicle|
+      self.new.tap do |car|
+        car.year = vehicle.css('div.hproduct').attr('data-year').value
+        car.type = vehicle.css('div.hproduct').attr('data-classification').value
+        car.make = vehicle.css('div.hproduct').attr('data-make').value
+        car.model = vehicle.css('div.hproduct').attr('data-model').value
+        car.year = vehicle.css('div.hproduct').attr('data-year').value
+        car.vdp_url = vehicle.css("div.media a").attr('href').value
+        car.price = vehicle.css("div.pricing-area  ul.pricing  li  span.internetPrice span.value").text
+      end
     end
-    cars_array
   end
 
   def self.scrape_vdp(a_car)
@@ -43,8 +38,6 @@ class CarsforSale::Car
       a_car.dealer_phone = dealer_details.css("div  ul  li  span.value").text
       a_car
   end
-
-
 end #of class
 
 
